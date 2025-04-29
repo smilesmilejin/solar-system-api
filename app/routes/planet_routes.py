@@ -86,7 +86,6 @@ def get_all_planets():
     query = db.select(Planet)
     
     name_param = request.args.get("name")
-    # print(request.args) # ImmutableMultiDict([('name', 'Venus')])
     if name_param:
         query = query.where(Planet.name == name_param)
     
@@ -98,13 +97,11 @@ def get_all_planets():
     # query = db.select(Planet).order_by(Planet.id)
     # End Wave 5
 
-
     planets = db.session.scalars(query)
-    print(planets)
+
     planets_response = []
 
     for planet in planets:
-        # print(planet)
         planets_response.append(
             {
                 "id": planet.id,
