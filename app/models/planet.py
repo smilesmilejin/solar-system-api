@@ -15,7 +15,7 @@
 # ]
 
 # Wave 3
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ..db import db
 
 class Planet(db.Model):
@@ -23,6 +23,11 @@ class Planet(db.Model):
     name: Mapped[str]
     description: Mapped[str]
     size: Mapped[int]
+
+    # Planet table:
+    # One-to-many: One planet has many moons
+    moons: Mapped[list["Moon"]] = relationship(back_populates="planet")
+
     
     def to_dict(self):
         return {
@@ -30,6 +35,9 @@ class Planet(db.Model):
             "name": self.name,
             "description": self.description,
             "size": self.size
+
+            # Add moons
+            # "moons": [moon.to_dict() for moon in self.moons]
         }
     
     @classmethod
